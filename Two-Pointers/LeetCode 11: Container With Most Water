@@ -1,0 +1,63 @@
+--Intuition
+
+Start with the widest container (leftmost and rightmost lines)
+
+Area is determined by:
+
+width × min(height[left], height[right])
+
+
+--To potentially get a larger area:
+
+Move the pointer with the smaller height
+
+Moving the taller one cannot increase the height and only reduces width
+
+⏱ Complexity
+
+Time: O(n)
+
+Space: O(1)
+
+This is optimal.
+Brute force would be O(n²), which is too slow.
+
+💻 Java Solution (Optimal)
+class Solution {
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int maxArea = 0;
+
+        while (left < right) {
+            int h = Math.min(height[left], height[right]);
+            int width = right - left;
+            maxArea = Math.max(maxArea, h * width);
+
+            // Move the pointer with smaller height
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return maxArea;
+    }
+}
+
+🧪 Dry Run (Example 1)
+height = [1,8,6,2,5,4,8,3,7]
+
+left=0, right=8 → area = 1×8 = 8
+move left
+
+left=1, right=8 → area = 7×7 = 49 (max)
+move right
+
+Continue → no larger area found
+Return 49
+
+📌 Key Insight (Interview Gold)
+
+The area is limited by the shorter line, so moving the taller line never helps.
