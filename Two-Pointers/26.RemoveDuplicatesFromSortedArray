@@ -1,0 +1,31 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if (nums.length == 0) return 0;
+
+        int slow = 0;
+
+        for (int fast = 1; fast < nums.length; fast++) {
+            if (nums[fast] != nums[slow]) {
+                slow++;
+                nums[slow] = nums[fast];
+            }
+        }
+
+        return slow + 1;
+    }
+}
+
+Dry Run (Example 2)
+nums = [0,0,1,1,1,2,2,3,3,4]
+
+slow = 0
+
+fast = 1 → same → skip
+fast = 2 → different → slow=1 → nums[1]=1
+fast = 3 → same → skip
+fast = 4 → same → skip
+fast = 5 → different → slow=2 → nums[2]=2
+fast = 7 → different → slow=3 → nums[3]=3
+fast = 9 → different → slow=4 → nums[4]=4
+
+Return 5
